@@ -7,7 +7,7 @@ const userRuter=require('./router/UserRuter')
 require('dotenv').config()
 app.use(express.json());
 app.use(cors({
-  origin:["http://localhost:5173"],
+  origin:["http://localhost:5173","https://stock-image-platform-nine.vercel.app/"],
   credentials:true
 }));
 connectDB()
