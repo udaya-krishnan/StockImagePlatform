@@ -1,5 +1,5 @@
 import axios from "axios"
- const url='https://stockimage.hostelhaven.site'
+ const url='http://stockimage.hostelhaven.site'
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 

@@ -7,10 +7,10 @@ const userRuter=require('./router/UserRuter')
 require('dotenv').config()
 app.use(express.json());
 app.use(cors({
-  origin: ["https://stock-image-platform-nine.vercel.app","http://localhost:5173",], // Add all allowed origins
-  credentials: true, // Enable sending cookies or authorization headers
-  methods: ["GET", "POST", "PUT", "DELETE"], // Define allowed HTTP methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+  origin: ["https://stock-image-platform-nine.vercel.app","http://localhost:5173",], 
+  credentials: true, 
+  methods: ["GET", "POST", "PUT", "DELETE"], 
+  allowedHeaders: ["Content-Type", "Authorization"], 
 }));
 connectDB()
 
