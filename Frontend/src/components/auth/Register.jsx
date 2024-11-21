@@ -39,7 +39,7 @@ function Register() {
      const res= await dispatch(registerUser(values))
      console.log(res,"response");
      
-     if(res.message=="created"){
+     if(res.payload.message=="created"){
       navigate('/')
      }
     },

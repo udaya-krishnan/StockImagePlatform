@@ -1,18 +1,28 @@
 import axios from "axios"
- const url='https://stockimage.hostelhaven.site'
+ const url='http://localhost:3000'
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
-export const registerUser=()=>async({name,email,phoneNumber,password})=>{
+
+export const registerUser = createAsyncThunk(
+  "user/register",
+  async ({ name, email, phoneNumber, password }, { rejectWithValue }) => {
     try {
-        const response=await axios.post(`${url}/register`,{name,email,phoneNumber,password})
-        return response.data
+      const response = await axios.post(`${url}/register`, {
+        name,
+        email,
+        phoneNumber,
+        password,
+      });
+      return response.data;
     } catch (error) {
-        console.log(error);
-        
+      console.error("Error in registerUser:", error);
+      // Reject with a message for proper error handling
+      return rejectWithValue(error.response.data || "Something went wrong");
     }
-}
+  }
+);
 
 export const login= createAsyncThunk(
     'user/login',

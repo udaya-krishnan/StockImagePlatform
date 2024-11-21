@@ -1,28 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "./userThunk";
-const data = localStorage.getItem("data")? JSON.parse(localStorage.getItem("data")): null;
 
-const userSlice = createSlice({     
+// Safely parse localStorage data with fallback
+const getLocalStorageData = () => {
+  try {
+    const storedData = localStorage.getItem("data");
+    return storedData ? JSON.parse(storedData) : null;
+  } catch (error) {
+    console.error("Failed to parse localStorage data:", error);
+    return null; // Fallback to null if parsing fails
+  }
+};
+
+const userSlice = createSlice({
   name: "user",
   initialState: {
-    data: data,
+    data: getLocalStorageData(),
   },
   reducers: {
-    Logout: (state, action) => {
+    Logout: (state) => {
       localStorage.removeItem("data");
       state.data = null;
     },
   },
   extraReducers: (builder) => {
-   builder
-   .addCase(login.fulfilled,(state, action) => {
-    const { data } = action.payload;
-    localStorage.setItem("data", JSON.stringify(data));
-    state.data = data;
-  })
+    builder.addCase(login.fulfilled, (state, action) => {
+      const { data } = action.payload;
+      localStorage.setItem("data", JSON.stringify(data)); // Save data in localStorage
+      state.data = data; // Update state
+    });
   },
 });
 
 export const { Logout } = userSlice.actions;
-
 export default userSlice.reducer;
