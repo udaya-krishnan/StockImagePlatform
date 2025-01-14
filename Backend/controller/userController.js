@@ -3,6 +3,9 @@ const Image=require('../model/imageModel')
 const bcrypt = require("bcrypt");
 const { generateTokens } = require("../utils/token");
 
+const cloudinary = require('../utils/cloudinaryConfig');
+const path = require('path');
+
 
 const securePassword = async (password) => {
     try {
@@ -88,7 +91,7 @@ const uploadImage = async (req, res) => {
     }
 
     const { title, id } = req.body;
-    const imagePath = `/public/${req.file.filename}`;  // Adjust the path as needed for your frontend
+    const imagePath = await  uploadImagefile(req.file.path) // Adjust the path as needed for your frontend
 
     console.log(title, id, imagePath);  // Debugging info
 
@@ -150,7 +153,7 @@ const updateimage=async(req,res)=>{
     console.log('hai there');
     
     
-    const imagePath = `/public/${req.file.filename}`;
+    const imagePath = await uploadImagefile(req.file.path)
     const updateImage=await Image.findByIdAndUpdate({_id:id},{
       $set:{imagePath:imagePath}
     })
@@ -200,6 +203,25 @@ const forgotPassword = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+
+// Upload an image to Cloudinary
+const uploadImagefile = async (filePath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: 'stockimage', // Optional folder in Cloudinary
+    });
+    console.log('Image uploaded successfully:', result.secure_url);
+    return result.secure_url; // This URL can be stored in your database
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error;
+  }
+};
+
+
+
 
 
 module.exports={
