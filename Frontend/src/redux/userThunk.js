@@ -1,5 +1,5 @@
 import axios from "axios"
- const url='http://localhost:3000'
+ const url='https://23287ef0-6d21-41f4-a021-a487e2051df4-00-1zrlblpoqyox5.pike.replit.dev/'
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
